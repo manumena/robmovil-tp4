@@ -1,0 +1,108 @@
+% ALGUNOS PAQUETES REQUERIDOS (EN UBUNTU): %
+% ========================================
+% %
+% texlive-latex-base %
+% texlive-latex-recommended %
+% texlive-fonts-recommended %
+% texlive-latex-extra %
+% texlive-science %
+% texlive-lang-spanish (en ubuntu 13.10) %
+% ******************************************************** %
+
+\documentclass[a4paper]{article}
+\usepackage[spanish, es-nodecimaldot]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage[pdftex]{graphicx}
+\usepackage{sidecap}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{makeidx}
+\usepackage{float}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage{listingsutf8}
+
+\linespread{factor}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\pgfplotsset{compat=1.8}
+\setlist[enumerate]{label*=\arabic*.}
+\lstset{
+	inputencoding=utf8/latin1,
+	language=C++,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries\color{blue},
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{mygreen}\ttfamily,
+	morecomment=[l][\color{magenta}]{\#},
+	numbers=left,
+	numberstyle=\color{mygray}
+}
+
+\input{page.layout}
+\usepackage{caratula}
+
+\allowdisplaybreaks
+\newcommand{\ord}{\ensuremath{\operatorname{O}}}
+\newcommand{\nat}{\ensuremath{\mathbb{N}}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\acr}[1]{\lowercase{\textsc{#1}}}
+\newcommand{\comp}{\ensuremath{^{\operatorname{C}}}}
+\newcommand{\argmax}{\operatornamewithlimits{arg\,m\acute{a}x}}
+
+\newcommand{\subheading}[1]{\vspace{1em} \noindent\textbf{#1} \nopagebreak
+\smallskip \nopagebreak}
+
+% Lemas, definiciones, etc.
+\theoremstyle{plain}
+  \newtheorem{prop}{Proposición}
+  \newtheorem{lema}{Lema}
+\theoremstyle{remark}
+  \newtheorem{obs}{Observación}
+\theoremstyle{definition}
+  \newtheorem{defi}{Definición}
+
+% Pseudocódigo
+\usepackage[onelanguage, spanish]{algorithm2e}
+    % \NoCaptionOfAlgo
+    \LinesNumbered\RestyleAlgo{ruled}\IncMargin{1em}\DontPrintSemicolon
+    \SetArgSty{}\SetCommentSty{textsf}\SetFuncSty{textsf}
+    \SetKwInput{Input}{Entrada}
+    \SetKwInput{Output}{Salida}
+    \SetKwProg{For}{para}{ hacer}{fin}
+    \SetKwProg{Fn}{función}{:}{fin}
+
+\begin{document}
+\materia{Introducción a la Robótica Móvil}
+\submateria{Segundo cuatrimestre de 2016}
+\titulo{Trabajo Práctico N\textsuperscript{o} 4}
+\subtitulo{Planificación de caminos utilizando RRT}
+\integrante{Luis García Gómez}{675/13}{garcia\_luis\_94@hotmail.com}
+\integrante{Manuel Mena}{313/14}{manuelmena1993@gmail.com}
+
+\maketitle
+% no footer on the first page
+\thispagestyle{empty}
+\newpage
+
+\section{Ejercicio 1}
+
+Explicar cómo definieron el ``área cercana al goal''. ¿Tomaron en cuenta el
+angulo $\theta$? ¿Cómo? \\
+
+Definimos el área cercana al goal como un cuadrado de lado 0.5 m con centro en
+el goal. Sí, tomamos en cuenta el ángulo del goal y le sumamos un valor
+aleatorio entre $\frac{-\pi}{4}$ y $\frac{\pi}{4}$.
+
+\end{document}
