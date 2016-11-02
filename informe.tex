@@ -31,6 +31,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{listings}
 \usepackage{listingsutf8}
+\usepackage{placeins}
 
 \linespread{factor}
 
@@ -117,7 +118,7 @@ Utilizamos una función de distancia propuesta en clase: $d(q_1, q_2) = k_{pos} 
   \item{$k_{or}$ es una constante real que determina el peso de $d_{\theta}$ relativo a $d_{(x, y)}$.}
 \end{itemize}
 
-\subsection{Explicar como establecieron ”discretizaron” el espacio de posibilidades a partir
+\subsection{Explicar como ”discretizaron” el espacio de posibilidades a partir
 de la ”configuración más cercana”.}
 
 Cómo el enunciado del trabajo proponía, para ”discretizar” el espacio de posibilidades se aplicaron algunas transformaciones simples a la velocidad lineal en $x$ ($v_x$) y la velocidad angular en $z$ ($w_z$) del robot. De esta manera establecimos tres configuraciones posibles candidatas a ser el resultado del método $steer()$. \\
@@ -151,5 +152,68 @@ Adelante-Derecha: \\
 \subsection{Explicar como resolvieron esta comprobación.}
 
 Para definir el método $isFree()$ nos basamos en lo siguiente: ajustamos el perímetro del robot a un rectángulo y verificamos que las esquinas de dicho rectángulo no estén en alguna posición que esté ocupada. Para esto último utilizamos el método propuesto $isPositionOccupy()$.
+
+\section{Ejercicio 2}
+
+\subsection{Presentar un gráfico con el árbol generado por el algoritmo RRT en cada situación. ¿En qué casos se pudo encontrar solución?, ¿Como resulto el seguimiento de la trayectoria a lazo abierto?. En los casos en que se pudo encontrar un camino, presentar una captura de pantalla con la posición final del pioneer en el RViz}
+
+Pudo encontrarse una solución en todos los casos excepto para el de velocidades demandantes. El seguimiento de la trayectoria no fue perfecto pero sí suficientemente preciso.
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.8]{imagenes/arbol_bias_alto.png}
+        \caption{Árbol generado cuando se configura un bias alto}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.35]{imagenes/rviz_bias_alto.png}
+        \caption{Camino calculado cuando se configura un bias alto}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.8]{imagenes/arbol_bias_bajo.png}
+        \caption{Árbol generado cuando se configura un bias bajo}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.35]{imagenes/rviz_bias_bajo.png}
+        \caption{Camino calculado cuando se configura un bias bajo}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.8]{imagenes/arbol_poco_demandante.png}
+        \caption{Árbol generado cuando se configura con velocidades poco demandantes}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.35]{imagenes/rviz_poco_demandante.png}
+        \caption{Camino calculado cuando se configura con velocidades poco demandantes}
+    \end{center}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics[scale=0.8]{imagenes/arbol_demandante.png}
+        \caption{Árbol generado cuando se configura con velocidades demandantes}
+    \end{center}
+\end{figure}
+
+\FloatBarrier
+\subsection{¿Como se podría mejorar el algoritmo RRT de manera de ”guiarlo” de manera
+más eficiente hacia el goal?. Contemplar el algoritmo A*.}
+
+Podría calcularse un buen camino con A* para que al momento de generar los ``focos'' a donde el robot intentará dirigirse, este tenga en cuenta puntos del camino calculado. De esta forma el robot es guiado por la trayectoria de un camino bastante bueno.
+
+Es importante que los puntos elegidos sean cercanos a los puntos explorados del árbol, ya que la ventaja de utilizar A* como guia es poder maniobrar mejor en senderos complicados. Si se toman puntos lejanos se pierde esa precisión.
 
 \end{document}
