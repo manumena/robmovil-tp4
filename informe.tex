@@ -98,11 +98,58 @@
 
 \section{Ejercicio 1}
 
-Explicar cómo definieron el ``área cercana al goal''. ¿Tomaron en cuenta el
-angulo $\theta$? ¿Cómo? \\
+\subsection{Explicar cómo definieron el ``área cercana al goal''. ¿Tomaron en cuenta el
+ángulo $\theta$? ¿Cómo?}
 
 Definimos el área cercana al goal como un cuadrado de lado 0.5 m con centro en
 el goal. Sí, tomamos en cuenta el ángulo del goal y le sumamos un valor
 aleatorio entre $\frac{-\pi}{4}$ y $\frac{\pi}{4}$.
+
+\subsection{Explicar que definición de distancia utilizaron. ¿Cómo integran el ángulo $\theta$?}
+
+Utilizamos una función de distancia propuesta en clase: $d(q_1, q_2) = k_{pos} * d_{(x, y)}(q_1, q_2) + k_{or} * d_{\theta}(q_1, q_2)$, donde: \\
+
+\begin{itemize}
+  \item{$q_1, q_2$ son dos configuraciones: cada cual describe una posición en $(x, y)$ y una orientación $\theta$.}
+  \item{$d_{(x, y)}$ es una función que dadas dos configuraciones retorna la distancia euclídea entre los puntos en el plano que describen.}
+  \item{$d_{\theta}$ es una función que dadas dos configuraciones retorna la diferencia normalizada entre las orientaciones que describen.}
+  \item{$k_{pos}$ es una constante real que determina el peso de $d_{(x, y)}$ relativo a $d_{\theta}$.}
+  \item{$k_{or}$ es una constante real que determina el peso de $d_{\theta}$ relativo a $d_{(x, y)}$.}
+\end{itemize}
+
+\subsection{Explicar como establecieron ”discretizaron” el espacio de posibilidades a partir
+de la ”configuración más cercana”.}
+
+Cómo el enunciado del trabajo proponía, para ”discretizar” el espacio de posibilidades se aplicaron algunas transformaciones simples a la velocidad lineal en $x$ ($v_x$) y la velocidad angular en $z$ ($w_z$) del robot. De esta manera establecimos tres configuraciones posibles candidatas a ser el resultado del método $steer()$. \\
+
+Sea $(x_r, y_r, \theta_r)$ la configuración más cercana encontrada, las transformaciones que aplicamos fueron: \\
+
+Adelante-Izquierda: \\
+
+\begin{itemize}
+  \item{$x = x_r + v_x * cos(\theta_r + w_z)$}
+  \item{$y = y_r + v_x * sin(\theta_r + w_z)$}
+  \item{$\theta = \theta_r + w_z$}
+\end{itemize}
+
+Adelante-Centro: \\
+
+\begin{itemize}
+  \item{$x = x_r + v_x * cos(\theta_r)$}
+  \item{$y = y_r + v_x * sin(\theta_r)$}
+  \item{$\theta = \theta_r$}
+\end{itemize}
+
+Adelante-Derecha: \\
+
+\begin{itemize}
+  \item{$x = x_r + v_x * cos(\theta_r - w_z)$}
+  \item{$y = y_r + v_x * sin(\theta_r - w_z)$}
+  \item{$\theta = \theta_r - w_z$}
+\end{itemize}
+
+\subsection{Explicar como resolvieron esta comprobación.}
+
+Para definir el método $isFree()$ nos basamos en lo siguiente: ajustamos el perímetro del robot a un rectángulo y verificamos que las esquinas de dicho rectángulo no estén en alguna posición que esté ocupada. Para esto último utilizamos el método propuesto $isPositionOccupy()$.
 
 \end{document}
